@@ -1,0 +1,39 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Student {
+  student_id   Int      @id @default(autoincrement())
+  student_name String
+  age          Int      @default(18)
+  grade        Int      
+  email        String   @unique
+  Enrollment   Enrollment[]
+}
+
+model Course {
+  course_id   Int       @id @default(autoincrement())
+  course_name String
+  teacher     String
+  credits     Int
+  class_time   String   @default("8:00-9:35")
+  Enrollment  Enrollment[]
+}
+
+model Enrollment {
+  enrollment_id  Int      @id @default(autoincrement())
+  student_id     Int
+  course_id      Int
+  enrollment_date DateTime @default(now())
+
+  Student Student @relation(fields: [student_id], references: [student_id], onDelete: Cascade)
+  Course  Course  @relation(fields: [course_id], references: [course_id], onDelete: Cascade)
+
+  @@index([student_id])
+  @@index([course_id])
+}
