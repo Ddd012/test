@@ -2,6 +2,7 @@
 CREATE TABLE "Student" (
     "student_id" SERIAL NOT NULL,
     "student_name" TEXT NOT NULL,
+    "age" INTEGER NOT NULL DEFAULT 18,
     "grade" INTEGER NOT NULL,
     "email" TEXT NOT NULL,
 
@@ -14,6 +15,7 @@ CREATE TABLE "Course" (
     "course_name" TEXT NOT NULL,
     "teacher" TEXT NOT NULL,
     "credits" INTEGER NOT NULL,
+    "class_time" TEXT NOT NULL DEFAULT '8:00-9:35',
 
     CONSTRAINT "Course_pkey" PRIMARY KEY ("course_id")
 );

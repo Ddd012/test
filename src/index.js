@@ -17,6 +17,11 @@ const client_1 = require("@prisma/client");
 const app = (0, express_1.default)();
 const prisma = new client_1.PrismaClient();
 app.use(express_1.default.json());
+// 错误处理中间件
+const errorHandler = (err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ error: 'Something went wrong!' });
+};
 // 获取所有学生
 app.get('/students', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const students = yield prisma.student.findMany();
@@ -110,6 +115,10 @@ app.delete('/enrollments/:id', (req, res) => __awaiter(void 0, void 0, void 0, f
     });
     res.json({ message: 'Enrollment deleted successfully' });
 }));
+// 使用错误处理中间件
+app.use(errorHandler);
 // 启动服务器
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`));
+const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server is running on http://0.0.0.0:${PORT}`);
+});

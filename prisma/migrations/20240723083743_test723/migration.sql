@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "Student" ALTER COLUMN "grade" SET DEFAULT 18,
-ALTER COLUMN "age" DROP DEFAULT;
